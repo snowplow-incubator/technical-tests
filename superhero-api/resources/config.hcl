@@ -12,8 +12,3 @@ target {
     url = "https://acme.com/x"
   }
 }
-
-// log level configuration (default: "info")
-log_level = "info"
-
-disable_telemetry = true
