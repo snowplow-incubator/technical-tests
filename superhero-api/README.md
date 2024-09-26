@@ -2,31 +2,52 @@
 
 ## Background
 
-We are building a hypothetical service for customers, which streams their data to a superhero API. The API ingests information about superheroes, keeping some information confidential, and some of it public. A schema for the expected structure of an API request's data [can be found in the resources directory](./resources/superHeroApiSpec.json).
+We are building a new service for our customers: It is called **The Superhero Service**.
 
-Snowbridge is a tool which generically serves use cases to read data, optionally transform or filter it, and send it to a destination stream or http endpoint. [An overview of Snowbridge can be found in the documentation](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/).
+Our customers like to collect data about superheroes.  Our customers provide to us a source of Superhero data which they have collected.  Our new Superhero Service must stream this data from the customer into a Superhero HTTP API. The HTTP API ingests information about superheroes, keeping some information confidential, and some of it public. A schema for the expected structure of an API request's data [can be found in the resources directory](./resources/superHeroApiSpec.json).
 
-The superhero service will use Snowbridge to transform input data, and send it to the superhero API. Transformation is achieved via the [javascript transformation script in the resources directory](./resources/superHeroAPI.js). Alongside [a sample Snowbridge configuration file](./resources/config.hcl). Snowbridge's configuration options [can be found in the documentation](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/configuration/), additionally there is a short [guide to running the app locally](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/testing/).
+<< Insert picture here showing source of data --> superhero service --> superhero api >>
 
-There is a [sample of input data for this service in the resources directory](./resources/input.txt).
+We are implementing The Superhero Service using [Snowbridge](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/). Snowbridge is a general-purpose streaming tool which can read data, transform or filter the data, and send the data to a destination http endpoint. [An overview of Snowbridge can be found in the documentation](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/).
 
-## The Task
+For the implementation of The Superhero Service, we have created some files which you can find in the `resources` directory:
 
-You are tasked with setting up testing to ensure that the service described above operates correctly, from entry to Snowbridge, through to reaching the api. We do not have access to a test API, but we must aim to confirm that we will correctly make requests to the API, insofar as possible. Assume that the features of Snowbridge are already well covered by unit tests - the goal of this exercise is to provide coverage of the functionality of this specific service.
+- A [sample of a customer's input data](./resources/input.txt).
+- A [javascript transformation script](./resources/superHeroAPI.js) which will transform the customer's input data into a format that can be ingested by the superhero API.
+- A [Snowbridge configuration file](./resources/config.hcl) which tells Snowbridge how to read, transform, and write the source of data.
 
-The main aim is to establish a first iteration of testing - which covers the most important core funcionality, and can be easily expanded upon by other team members in the future. We expect to add to it regularly over time in small steps. We also wish to use and add to this setup in the event that we run into an issue with the production service - when we need to replicate and respond quickly.
+And that's all!  Those files are all that is needed to run The Superhero Service via Snowbridge.
 
-We should assume that some of the team members adding to the tests, doing so may be their first interaction with this service, and some of them may not have much experience with Go.
+Snowbridge's configuration options [can be found in the documentation](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/configuration/), additionally there is a short [guide to running the app locally](https://docs.snowplow.io/docs/destinations/forwarding-events/snowbridge/testing/).
+
+## Your Task
+
+**Your task is to set up testing to ensure that The Superhero Service operates correctly.**
+
+Your test must demonstrate that The Superhero Service correctly reads the source of data, transforms the data, and forwards the data to the Superhero HTTP API.
+
+Unfortunately, for our tests we are not allowed to use the _real_ Superhero HTTP API servers.  But you must still aim to validate how the Superhero Service sends data to a HTTP endpoint, insofar as possible.
+
+Assume that the features of Snowbridge are already well covered by unit tests; you are not required to demonstrate the general features of Snowbridge. The goal of this exercise is to test the specific functionality of The Superhero Service.
 
 Specific instructions:
 
 - Use Go if possible (our internal QA setup is written using Go)
-- Set up a test http server to receive the data in our tests
-- Write a test/some tests to cover the core functionality of the service, as far as is practical
+- Set up a test HTTP server to receive the data in your tests
+- Write tests to cover the core functionality of The Superhero Service, as far as is practical
 - Keep it simple
 - Use code for as much of the process as is practical
 - Write a short guide for how to run the the tests - a short readme or code comment would work. Choose whatever is most fitting for your solution
-- Comment your code as appropriate
-- Add an example of a scenario which fails to conform to the API's expected data structure
+- ~Comment your code as appropriate~
+- ~Add an example of a scenario which fails to conform to the API's expected data structure~
 
-Push your solution to a repo and send us a link to it, rather than creating a PR in this repo.
+Push your solution to a GitHub repo and send us a link to it. Please do not create a PR against this repo.
+
+
+
+#### I would cut these lines:
+
+The main aim is to establish a first iteration of testing - which covers the most important core funcionality, and can be easily expanded upon by other team members in the future. We expect to add to it regularly over time in small steps. We also wish to use and add to this setup in the event that we run into an issue with the production service - when we need to replicate and respond quickly
+
+We should assume that some of the team members adding to the tests, doing so may be their first interaction with this service, and some of them may not have much experience with Go.
+
