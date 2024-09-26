@@ -6,14 +6,12 @@ transform {
   }
 }
 
-
-
-// target {
-//   use "http" {
-//     # URL endpoint
-//     url = "https://acme.com/x"
-//   }
-// }
+target {
+  use "http" {
+    # URL endpoint
+    url = "https://acme.com/x"
+  }
+}
 
 // log level configuration (default: "info")
 log_level = "info"
