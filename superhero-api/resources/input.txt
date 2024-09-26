@@ -1,0 +1,4 @@
+{"name":"Diana Prince","occupation":"Nurse","alterEgo":"Wonder Woman","collaborators":["Etta Candy"],"abilities":["Super Strength","Flight"]}
+{"name":"Bruce Wayne","occupation":"Philantropist","alterEgo":"Batman","collaborators":["Robin","Lucius Fox","Alfred"],"abilities":["Rich dude"]}
+{"name":"Ororo Munroe","occupation":null,"alterEgo":"Storm","collaborators":["Professor X","Wolverine","Cyclops","Beast","Gambit","Vinnie Jones"],"abilities":["Flight","Weather control"]}
+{"name":"Clark Kent","occupation":"Reporter","alterEgo":"Superman","collaborators":["Lois Lane"],"abilities":["Super Strength","X-ray vision","Flight"]}
