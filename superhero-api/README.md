@@ -39,5 +39,9 @@ Specific instructions:
 - Use code for as much of the process as is practical
 - Write a short guide for how to run the the tests - a short readme or code comment would work. Choose whatever is most fitting for your solution
 
-Push your solution to a private GitHub repo and invite us to it - please add <insert_git_usernames>. Please do not create a PR against this repo.
+Push your solution to a **private GitHub repo and invite us to it**.
+
+Add the following GitHub users: **colmsnowplow**, **istreeter**, **peel**, **jbeemster**, **AlexBenny**.
+
+Please, **do not create a PR against this repo**.
 
