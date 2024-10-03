@@ -8,7 +8,7 @@ transform {
 
 target {
   use "http" {
-    # URL endpoint
-    url = "https://acme.com/x"
+    # URL endpoint. Change this as appropriate for your tests.
+    url = "https://example.com/x"
   }
 }
