@@ -1,0 +1,19 @@
+# Avalanche API Configuration
+
+# Server Configuration
+port: 9191
+
+# Database Configuration
+database_uri: "postgres://postgres:postgres@localhost:5000/snowplow"
+database_pool_size: 30
+
+# Event Processing Configuration
+extract_keys:
+  - userId
+  - email
+  # Note: eventId is automatically used as the primary key for each event
+
+# Performance Settings (optional - has sensible defaults)
+max_workers: 5            # Concurrent batch processors
+max_request_size: 1000    # Maximum events per request
+batch_size: 100           # Events per batch

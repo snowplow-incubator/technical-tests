@@ -1,0 +1,105 @@
+configs:
+  psql_config:
+    content: |
+      listen_addresses = '*'
+      max_connections = 1200
+      shared_buffers = 1GB
+      effective_cache_size = 3GB
+      work_mem = 16MB
+      maintenance_work_mem = 256MB
+      max_worker_processes = 16
+      max_parallel_workers = 16
+      max_parallel_workers_per_gather = 4
+      checkpoint_completion_target = 0.9
+      wal_buffers = 16MB
+      default_statistics_target = 100
+      random_page_cost = 1.1
+      shared_preload_libraries = 'pg_stat_statements'
+      pg_stat_statements.max = 10000
+      pg_stat_statements.track = all
+      pg_stat_statements.track_utility = on
+      pg_stat_statements.save = on
+services:
+  postgres:
+    image: postgres:17.4
+    ports:
+      - "${POSTGRES_PORT:-5000}:5432"
+    profiles:
+      - base
+      - postgres
+    configs:
+      - source: psql_config
+        target: /etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: snowplow
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:8.0.2
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    profiles:
+      - redis
+
+  graphite:
+    image: graphiteapp/graphite-statsd
+    profiles:
+      - grafana
+    volumes:
+      - graphite_data:/opt/graphite/storage
+    ports:
+      - 2003-2004:2003-2004
+      - 2023-2024:2023-2024
+      - 8125:8125/udp
+      - 8126:8126
+      - 80:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    profiles:
+      - grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel,grafana-worldmap-panel"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./.exec/grafana:/etc/grafana/provisioning
+    depends_on:
+      - graphite
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  locust:
+    image: locustio/locust
+    profiles:
+      - test
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./.exec/locust:/mnt/locust:ro
+    command: -f /mnt/locust/locustfile.py -H http://host.docker.internal:9000 --class-picker
+
+volumes:
+  redis-data:
+  graphite_data:
+  grafana_data:
