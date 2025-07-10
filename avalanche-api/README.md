@@ -102,3 +102,46 @@ It takes several times with the same request for all of them to return the same 
 - What if we had to change the API - how can we prevent breaking the contract?
 
 We will discuss the implementation and the approach taken.
+
+## Development
+
+### Requirements
+
+- go (project version is `1.19` - see `go.mod`)
+- docker
+
+### Running
+
+The CLI interface contains 2 commands:
+
+- `run` to start the service
+- `migrate` to run database migrations
+
+Both commands expect `--config` flag. Use the provided `config.yml` as reference.
+
+To run the project start the project dependencies (`postgres`):
+
+```
+docker compose up -d postgres
+```
+
+And then run the CLI:
+
+```
+go run . run --config config.yml
+```
+
+Or build and then run:
+
+```
+go build .
+./avalanche-api run --config config.yml
+```
+
+### Testing
+
+The tests can be ran using:
+
+```
+go test -v ./...
+```
